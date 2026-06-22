@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Sentiment Analysis</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
+            padding:20px;
+        }
+
+        .container{
+            width:100%;
+            max-width:800px;
+            background:rgba(255,255,255,0.08);
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,0.15);
+            border-radius:25px;
+            padding:40px;
+            color:white;
+            box-shadow:0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:10px;
+            font-size:2.2rem;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#cbd5e1;
+            margin-bottom:30px;
+        }
+
+        textarea{
+            width:100%;
+            min-height:180px;
+            border:none;
+            border-radius:18px;
+            padding:20px;
+            resize:none;
+            font-size:16px;
+            outline:none;
+            background:rgba(255,255,255,0.1);
+            color:white;
+        }
+
+        textarea::placeholder{
+            color:#cbd5e1;
+        }
+
+        button{
+            width:100%;
+            margin-top:20px;
+            padding:15px;
+            border:none;
+            border-radius:15px;
+            background:#3b82f6;
+            color:white;
+            font-size:17px;
+            font-weight:600;
+            cursor:pointer;
+            transition:.3s;
+        }
+
+        button:hover{
+            transform:translateY(-2px);
+            background:#2563eb;
+        }
+
+        .result-card{
+            margin-top:30px;
+            padding:25px;
+            border-radius:18px;
+            text-align:center;
+        }
+
+        .normal{
+            background:rgba(34,197,94,0.15);
+            border:1px solid rgba(34,197,94,0.4);
+        }
+
+        .offensive{
+            background:rgba(239,68,68,0.15);
+            border:1px solid rgba(239,68,68,0.4);
+        }
+
+        .prediction{
+            font-size:28px;
+            font-weight:700;
+            margin-top:10px;
+        }
+
+        .emoji{
+            font-size:50px;
+        }
+
+        .tweet-preview{
+            margin-top:15px;
+            color:#e2e8f0;
+            font-size:14px;
+            line-height:1.6;
+        }
+
+        .footer{
+            margin-top:25px;
+            text-align:center;
+            color:#94a3b8;
+            font-size:13px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🐦 Twitter Sentiment Analysis</h1>
+
+    <p class="subtitle">
+        Detect whether a tweet is Normal or Offensive using Machine Learning
+    </p>
+
+    <form method="post">
+
+        <textarea
+            name="text"
+            placeholder="Type a tweet here..."
+        >{{ text if text else '' }}</textarea>
+
+        <button type="submit">
+            Analyze Tweet
+        </button>
+
+    </form>
+
+    {% if prediction %}
+
+        {% if prediction == "Normal" %}
+
+        <div class="result-card normal">
+            <div class="emoji">😊</div>
+            <div>Prediction</div>
+            <div class="prediction">{{ prediction }}</div>
+
+            <div class="tweet-preview">
+                "{{ text }}"
+            </div>
+        </div>
+
+        {% else %}
+
+        <div class="result-card offensive">
+            <div class="emoji">⚠️</div>
+            <div>Prediction</div>
+            <div class="prediction">{{ prediction }}</div>
+
+            <div class="tweet-preview">
+                "{{ text }}"
+            </div>
+        </div>
+
+        {% endif %}
+
+    {% endif %}
+
+    <div class="footer">
+        Built with FastAPI • Scikit-Learn • TF-IDF
+    </div>
+
+</div>
+
+</body>
+</html>
